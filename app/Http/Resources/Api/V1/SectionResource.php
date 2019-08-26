@@ -14,13 +14,25 @@ class SectionResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            "sectionId" => $this->id,
-            "title" => $this->title,
-            "subtitle" => $this->subtitle,
-            "sectionItemType" => get_list_section_type($this->section_item_type),
-            "layoutType" => get_list_section_layout($this->layout_type),
-            "sectionItems" => SectionItemResource::collection($this->whenLoaded('items'))
-        ];
+        $type = get_list_section_type($this->section_item_type);
+        if ($type == 'book') {
+            return [
+                "sectionId" => (string) $this->id,
+                "title" => $this->title,
+                "subtitle" => $this->subtitle,
+                "sectionItemType" => get_list_section_type($this->section_item_type),
+                "layoutType" => get_list_section_layout($this->layout_type),
+                "sectionItems" => SectionItemResource::collection($this->whenLoaded('books'))
+            ];
+        } else {
+            return [
+                "sectionId" => (string) $this->id,
+                "title" => $this->title,
+                "subtitle" => $this->subtitle,
+                "sectionItemType" => get_list_section_type($this->section_item_type),
+                "layoutType" => get_list_section_layout($this->layout_type),
+                "sectionItems" => SectionItemResource::collection($this->whenLoaded('categories'))
+            ];
+        }
     }
 }

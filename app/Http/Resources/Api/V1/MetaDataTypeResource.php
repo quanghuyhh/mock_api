@@ -15,7 +15,7 @@ class MetaDataTypeResource extends JsonResource
     public function toArray($request)
     {
         return [
-            "metaDataTypeId" => $this->id,
+            "metaDataTypeId" => (string) $this->id,
             "title" => $this->title
         ];
     }

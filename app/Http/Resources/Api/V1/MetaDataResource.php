@@ -15,7 +15,7 @@ class MetaDataResource extends JsonResource
     public function toArray($request)
     {
         return [
-            "metadataItemId" => $this->id,
+            "metadataItemId" => (string) $this->id,
             "value" => $this->value,
             "metaDataType" => MetaDataTypeResource::make($this->whenLoaded('type')),
         ];

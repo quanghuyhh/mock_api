@@ -4,9 +4,24 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Exceptions\BaseApiException;
+use App\Repositories\ApiExceptionRepository;
 
 class BaseApiController extends Controller
 {
+    public $_apiExceptionRepository;
+
+    public function __construct(Request $request, ApiExceptionRepository $apiExceptionRepository)
+    {
+        $this->_apiExceptionRepository = $apiExceptionRepository;
+
+        if ($request->has('page_token') || $request->has('page_size')) {
+            $page = $request->get('page_token', 1);
+            $limit = $request->get('page_size', PAGINATE_LIMIT_RECORD);
+
+            $request->request->add(['page' => $page, 'limit' => $limit]);
+        }
+    }
     /**
      * @param string $resourceName
      * @param array ...$args

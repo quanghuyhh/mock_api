@@ -1,0 +1,39 @@
+version: '3'
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: docker/dev/php/app.dockerfile
+    container_name: mockapi-php-dev
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+    environment:
+      - "DB_PORT=3306"
+      - "DB_HOST=database"
+      
+  web:
+    build:
+      context: ./
+      dockerfile: docker/dev/nginx/web.dockerfile
+    container_name: mockapi-nginx-dev
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+    ports:
+      - 8088:80
+
+  database:
+    image: mysql:5.7
+    container_name: mockapi-mysql57-dev
+    volumes:
+      - dbdata:/var/lib/mysql
+    environment:
+      - "MYSQL_DATABASE=homestead"
+      - "MYSQL_USER=homestead"
+      - "MYSQL_PASSWORD=secret"
+      - "MYSQL_ROOT_PASSWORD=secret"
+    ports:
+      - "33061:3306"
+volumes:
+  dbdata:

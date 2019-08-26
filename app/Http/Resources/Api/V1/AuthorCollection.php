@@ -15,7 +15,7 @@ class AuthorCollection extends JsonResource
     public function toArray($request)
     {
         return [
-            "authorId" => $this->id,
+            "authorId" => (string) $this->id,
             "name" => $this->name
         ];
     }

@@ -11,8 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return null;
+use Illuminate\Http\Request;
+
+Route::get('/', function (Request $request) {
+    return 'null';
 });
 
 Route::group(['prefix' => 'mock', 'namespace' => '\App\Http\Controllers\Mock'], function () {
@@ -22,4 +24,7 @@ Route::group(['prefix' => 'mock', 'namespace' => '\App\Http\Controllers\Mock'], 
     Route::get('metas', ['uses' => 'FakeDataController@metas']);
     Route::get('sections', ['uses' => 'FakeDataController@sections']);
     Route::get('summary', ['uses' => 'FakeDataController@summary']);
+    Route::get('categories', ['uses' => 'FakeDataController@categories']);
+    Route::get('bookCates', ['uses' => 'FakeDataController@bookCates']);
+    Route::get('mockall', ['uses' => 'FakeDataController@mockall']);
 });

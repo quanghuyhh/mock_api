@@ -15,8 +15,9 @@ class CreateSummariesTable extends Migration
     {
         Schema::create('summaries', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->json('text_info');
-            $table->json('audio_info');
+            $table->bigInteger('text_id');
+            $table->bigInteger('audio_id');
+            $table->bigInteger('video_id');
             $table->timestamps();
         });
     }

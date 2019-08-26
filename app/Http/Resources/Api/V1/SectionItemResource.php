@@ -14,13 +14,18 @@ class SectionItemResource extends JsonResource
      */
     public function toArray($request)
     {
+        $covers = $this->cover_info && isJSON($this->cover_info) ? (object) json_decode($this->cover_info) : null;
+        $thumb = $covers && !empty($covers) ? $covers->original : '';
+        $author = !empty($this->authors) ? $this->authors[0]->name : '';
+        $progress = $this->progress ? $this->progress->progress : 0;
+        
         return [
-            "objectId" => $this->id,
+            "objectId" => (string) $this->id,
             "title" => $this->title,
-            "thumbImageUrl" => $this->thumb_image_url,
-            "authorName" => $this->author_name,
-            "shortDescription" => $this->short_description,
-            "readingProgress" => (int) $this->reading_progress
+            "thumbImageUrl" => $thumb,
+            "authorName" => $author,
+            "shortDescription" => $this->short_description ?? '',
+            "readingProgress" => (int) $progress
         ];
     }
 }
